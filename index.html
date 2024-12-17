@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
@@ -12,9 +13,23 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: #000; /* Black background */
-            color: #fff; /* White text */
-            text-align: center; /* Center-align text globally */
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            cursor: none; /* Disable default cursor */
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #06f2ce; /* blue pointer */
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease;
+            z-index: 9999;
         }
 
         header nav ul {
@@ -22,7 +37,7 @@
             display: flex;
             justify-content: center;
             padding: 10px;
-            background-color: #000; /* Black navigation bar */
+            background-color: #000;
         }
 
         header nav ul li {
@@ -31,35 +46,53 @@
 
         header nav ul li a {
             text-decoration: none;
-            color: #fff; /* White text for navigation links */
+            color: #fff;
             font-weight: bold;
             text-transform: uppercase;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #ffcb05;
+            transform: scale(1.1);
+        }
+
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling */
         }
 
         .hero {
             padding: 50px 20px;
-            background-color: #000; /* Black background */
+            background: #000;
             color: white;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            position: relative;
         }
 
         .hero h1 {
             font-size: 3em;
+            animation: fadeIn 2s ease-in-out;
         }
 
         .hero p {
             font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         #about {
             padding: 40px 20px;
-            background-color: #000; /* Black background for About section */
-            color: #fff; /* White text */
-            height: 100vh; /* Full viewport height */
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,45 +101,44 @@
 
         #about h2 {
             font-size: 2.5em;
-            color: #FFD700; /* Gold color for section title */
+            color: #FFD700;
         }
 
         #about p {
             font-size: 1.4em;
-            line-height: 1.6; /* Slightly increased line height for readability */
+            line-height: 1.6;
         }
 
-        /* Color classes */
         .blue-text {
-            color: blue; /* Blue color for IIT Kharagpur */
+            color: blue;
         }
 
         .green-text {
-            color: green; /* Green color for Department of Biosciences and Biotechnology */
+            color: green;
         }
 
         .cream-pink-text {
-            color: #F2D1D1; /* Cream-pink color for research */
+            color: #F2D1D1;
         }
 
-        #contact {
+        .contact {
             padding: 40px 20px;
-            background-color: #000; /* Black background for Contact section */
+            background-color: #000;
             color: #fff;
-            height: 50vh; /* Reduced height */
+            height: 50vh;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
-        #contact h2 {
+        .contact h2 {
             font-size: 2.5em;
-            color: #FFD700; /* Gold color for section title */
+            color: #FFD700;
             margin-bottom: 20px;
         }
 
-        #contact .contact-links {
+        .contact .contact-links {
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -114,51 +146,49 @@
             padding: 20px;
         }
 
-        #contact .contact-links a {
+        .contact .contact-links a {
             text-decoration: none;
-            color: #fff; /* White text for links */
+            color: #fff;
             font-size: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            transition: color 0.3s, transform 0.3s;
+            transition: transform 0.3s;
         }
 
-        #contact .contact-links a i {
+        .contact .contact-links a i {
             font-size: 36px;
         }
 
-        /* Colorful icons */
-        #contact .contact-links a.instagram i {
-            color: #E4405F; /* Instagram pink */
+        .contact .contact-links a.instagram i {
+            color: #E4405F;
         }
 
-        #contact .contact-links a.linkedin i {
-            color: #0077B5; /* LinkedIn blue */
+        .contact .contact-links a.linkedin i {
+            color: #0077B5;
         }
 
-        #contact .contact-links a.github i {
-            color: #fff; /* White color for GitHub icon */
-            background-color: #333; /* Dark background for GitHub icon */
-            border-radius: 50%; /* Make the background circular */
-            padding: 10px; /* Add padding to create a circular shape */
+        .contact .contact-links a.github i {
+            color: #fff;
+            background-color: #333;
+            border-radius: 50%;
+            padding: 10px;
         }
 
-        #contact .contact-links a.gmail i {
-            color: #DB4437; /* Gmail red */
+        .contact .contact-links a.gmail i {
+            color: #DB4437;
         }
 
-        /* Hover effects for icons */
-        #contact .contact-links a:hover i {
-            transform: scale(1.1); /* Slightly enlarge the icon on hover */
+        .contact .contact-links a:hover {
+            transform: scale(1.1);
         }
 
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #000; /* Black footer background */
-            color: #fff; /* White text */
+            background-color: #000;
+            color: #fff;
         }
 
         footer p {
@@ -167,6 +197,9 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
     <header>
         <nav>
             <ul>
@@ -177,44 +210,68 @@
         </nav>
     </header>
 
-    <section id="home" class="hero">
+    <section id="home" class="hero" data-aos="fade-up">
         <h1>Welcome to Neel's Personal Website!</h1>
         <p>Discover my skills, projects, and how to get in touch.</p>
     </section>
 
     <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm Neel Gupta, a freshman from <span class="blue-text">IIT Kharagpur</span> from the <span class="green-text">Department of Biosciences and Biotechnology</span>.
+        <h2 data-aos="fade-right">About Me</h2>
+        <p data-aos="fade-left">Hello! I'm Neel Gupta, a freshman from <span class="blue-text">IIT Kharagpur</span> in the <span class="green-text">Department of Biosciences and Biotechnology</span>.
             I am currently learning Backend Development and have a keen interest in Game Theory, Computational Biology, Blockchain, and Data Analytics.
-            I enjoy playing all sorts of sports and love participating in all kinds of <span class="cream-pink-text">research</span> activities. 
-            Currently, I am part of the KGPian Game Theory Society and working as an Associate Member.</p>
+            I enjoy playing all sorts of sports and love participating in all kinds of <span class="cream-pink-text">research</span> activities.
+        </p>
     </section>
 
-    <section id="contact">
-        <h2>Contact Me</h2>
+    <section id="contact" class="contact">
+        <h2 data-aos="fade-up">Contact Me</h2>
         <div class="contact-links">
             <a href="https://instagram.com/kryoton98" target="_blank" class="instagram">
-                <i class="fab fa-instagram"></i>
-                Instagram
+                <i class="fab fa-instagram"></i>Instagram
             </a>
             <a href="https://linkedin.com/in/kryoton98" target="_blank" class="linkedin">
-                <i class="fab fa-linkedin"></i>
-                LinkedIn
+                <i class="fab fa-linkedin"></i>LinkedIn
             </a>
-            <!-- GitHub icon with white background -->
             <a href="https://github.com/kryoton98" target="_blank" class="github">
-                <i class="fab fa-github"></i>
-                GitHub
+                <i class="fab fa-github"></i>GitHub
             </a>
             <a href="mailto:neelgupta006@gmail.com" target="_blank" class="gmail">
-                <i class="fas fa-envelope"></i>
-                Gmail
+                <i class="fas fa-envelope"></i>Gmail
             </a>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2024 Neel Gupta. All rights reserved.</p>
+        <p>&copy; 2024 Neel Gupta. All Rights Reserved.</p>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init(); // Initialize AOS animations
+
+        // Smooth Floating Cursor Script
+        const cursor = document.querySelector(".custom-cursor");
+        let mouseX = 0, mouseY = 0; // Mouse positions
+        let cursorX = 0, cursorY = 0; // Cursor positions
+        const speed = 0.2; // Adjust speed for smoothness (lower is smoother)
+
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+        });
+
+        function animateCursor() {
+            // Gradually ease cursor towards mouse position
+            cursorX += (mouseX - cursorX) * speed;
+            cursorY += (mouseY - cursorY) * speed;
+
+            const cursorSize = cursor.offsetWidth / 2; 
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`; // Smooth transform
+
+            requestAnimationFrame(animateCursor); // Continue animation
+        }
+
+        animateCursor();
+    </script>
 </body>
 </html>

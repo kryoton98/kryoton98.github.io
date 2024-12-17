@@ -5,6 +5,7 @@ body {
     padding: 0;
     line-height: 1.6;
     color: #333;
+    cursor: none; /* Hides the default mouse cursor */
 }
 
 header {
@@ -122,4 +123,17 @@ footer {
     background: #333;
     color: #fff;
     margin-top: 20px;
+}
+
+/* Custom Mouse Pointer */
+.custom-cursor {
+    width: 30px; /* Size of the circle */
+    height: 30px;
+    border: 2px solid #a6c40f; /* White border for the circle */
+    border-radius: 50%; /* Makes it a circle */
+    position: absolute;
+    pointer-events: none; /* Prevents interfering with clicks */
+    transform: translate(-50%, -50%); /* Center the circle on the mouse */
+    transition: transform 0.05s ease; /* Smooth movement */
+    z-index: 9999; /* Ensures the cursor is on top */
 }
